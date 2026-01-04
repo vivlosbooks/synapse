@@ -9,7 +9,7 @@
 const CONFIG = {
     // API Key: Set this manually, or pass via URL parameter (?api_key=YOUR_KEY)
     // For production, consider using a backend proxy to keep keys secure
-    API_KEY: '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', 
+    API_KEY: '', 
     API_URL: 'https://api.openai.com/v1/chat/completions',
     MODEL: 'gpt-4',
     MIN_THINKERS: 3,
@@ -247,6 +247,7 @@ const elements = {
     verdictContent: document.getElementById('verdict-content'),
     verdictExport: document.getElementById('verdict-export'),
     logoReset: document.getElementById('logo-reset'),
+    logoHome: document.getElementById('logo-home'),
     
     // Footer
     currentYear: document.getElementById('current-year'),
@@ -1630,7 +1631,7 @@ function resetApp(showConfirmation = false) {
     // Show question phase
     showPhase('question');
     
-    // Force scroll to top
+    // Force scroll to top - ensure content aligns perfectly under header
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -2629,10 +2630,12 @@ function init() {
         newInquiryBtn.onclick = resetApp;
     }
     
-    // Logo click handler for reset (acts as Home button)
-    if (elements.logoReset) {
-        elements.logoReset.addEventListener('click', (e) => {
+    // Logo container click handler for reset (acts as Home button)
+    // This makes the entire logo + title group clickable
+    if (elements.logoHome) {
+        elements.logoHome.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             // Show confirmation if analysis is in progress, otherwise reset immediately
             resetApp(true);
         });

@@ -33,8 +33,8 @@
         <header class="header">
             <div class="header-content">
                 <div class="brand-container">
-                    <div class="logo-container">
-                        <img src="logo.svg" alt="SYNAPSE Logo" class="logo-img" id="logo-reset" style="cursor: pointer;">
+                    <div class="logo-container" id="logo-home" aria-label="Return to Home">
+                        <img src="logo.svg" alt="SYNAPSE Logo" class="logo-img" id="logo-reset">
                         <h1 class="title">SYNAPSE</h1>
                     </div>
                     <p class="tagline">First Principles Thinking Engine</p>
@@ -43,8 +43,14 @@
                     <span class="header-link lang-toggle">
                         <span id="lang-en" style="cursor: pointer;">EN</span> | <span id="lang-gr" style="cursor: pointer;">GR</span>
                     </span>
-                    <button id="api-key-btn" class="header-link">⚙️ API Key</button>
-                    <button id="about-btn" class="header-link">About</button>
+                    <button id="api-key-btn" class="header-link">
+                        <span class="link-icon">⚙️</span>
+                        <span class="link-text">API Key</span>
+                    </button>
+                    <button id="about-btn" class="header-link">
+                        <span class="link-icon">ⓘ</span>
+                        <span class="link-text">About</span>
+                    </button>
                 </div>
             </div>
         </header>
