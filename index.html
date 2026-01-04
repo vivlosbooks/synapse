@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNAPSE</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    
+    <!-- OpenGraph Meta Tags for Social Media -->
+    <meta property="og:title" content="SYNAPSE">
+    <meta property="og:description" content="A convergence platform where historical philosophy meets modern strategic thinking. The Architecture of Wisdom.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="logo.svg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="SYNAPSE">
+    <meta name="twitter:description" content="A convergence platform where historical philosophy meets modern strategic thinking. The Architecture of Wisdom.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="brand-container">
+                    <div class="logo-container">
+                        <img src="logo.svg" alt="SYNAPSE Logo" class="logo-img" id="logo-reset" style="cursor: pointer;">
+                        <h1 class="title">SYNAPSE</h1>
+                    </div>
+                    <p class="tagline">First Principles Thinking Engine</p>
+                </div>
+                <div class="header-actions">
+                    <span class="header-link lang-toggle">
+                        <span id="lang-en" style="cursor: pointer;">EN</span> | <span id="lang-gr" style="cursor: pointer;">GR</span>
+                    </span>
+                    <button id="api-key-btn" class="header-link">⚙️ API Key</button>
+                    <button id="about-btn" class="header-link">About</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Phase 1: Question Input -->
+            <section id="question-phase" class="phase active">
+                <div class="question-container">
+                    <label for="question-input" class="input-label" data-i18n="questionLabel">Enter Your Question</label>
+                    <textarea 
+                        id="question-input" 
+                        class="question-input" 
+                        data-i18n="placeholder"
+                        placeholder="Describe your dilemma or strategic challenge..."
+                        rows="4"
+                    ></textarea>
+                    <button id="question-submit" class="btn-primary" data-i18n="questionSubmit">Proceed to Council Selection</button>
+                </div>
+            </section>
+
+            <!-- Phase 2: Council Selection -->
+            <section id="selection-phase" class="phase">
+                <div class="selection-container">
+                    <h2 class="phase-title" data-i18n="selectionTitle">Assemble your Council of 5 to begin the simulation</h2>
+                    <p class="selection-counter">
+                        <span id="selected-count" data-i18n-counter="selectedCount">0</span>
+                    </p>
+                    <div class="preset-buttons">
+                        <button id="preset-disruptor" class="btn-preset">Disruptor Mode</button>
+                        <button id="preset-wisdom" class="btn-preset">Wisdom Mode</button>
+                        <button id="preset-logic" class="btn-preset">Logic Mode</button>
+                    </div>
+                    <div id="thinkers-grid" class="thinkers-grid"></div>
+                    <div class="selection-actions">
+                        <button id="selection-back" class="btn-secondary">Back</button>
+                        <button id="selection-proceed" class="btn-primary" disabled data-i18n="analyze_button">Analyze</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Phase 3: Live Debate -->
+            <section id="debate-phase" class="phase">
+                <div class="debate-container">
+                    <div class="debate-header">
+                        <h2 class="phase-title">The Arena</h2>
+                        <div class="debate-controls">
+                            <button id="pause-debate" class="btn-icon" title="Pause">⏸</button>
+                        </div>
+                    </div>
+                    <div class="consensus-container">
+                        <div id="status-message" class="status-message">Council is debating...</div>
+                        <div class="consensus-label" data-i18n="consensusLabel">COUNCIL CONSENSUS</div>
+                        <div class="consensus-bar-wrapper">
+                            <div id="consensus-bar" class="consensus-bar"></div>
+                            <span id="consensus-percentage" class="consensus-percentage">0%</span>
+                        </div>
+                    </div>
+                    <div id="arena" class="arena"></div>
+                    <div class="debate-footer">
+                        <div id="current-speaker" class="current-speaker"></div>
+                        <button id="debate-back" class="btn-secondary">Back</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Phase 4: Final Verdict -->
+            <section id="verdict-phase" class="phase">
+                <div class="verdict-container">
+                    <h2 class="phase-title" data-i18n="final_verdict">Final Verdict</h2>
+                    
+                    <!-- Analytical Dimensions Section -->
+                    <div class="analytical-dimensions">
+                        <h3 class="dimensions-title">Analytical Dimensions</h3>
+                        <div class="chart-container">
+                            <canvas id="insightChart"></canvas>
+                        </div>
+                        <div class="dimension-legend">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #00f2ff;"></span>
+                                <span class="legend-label"><strong>Logic:</strong> Rational analysis and systematic thinking</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #ffd700;"></span>
+                                <span class="legend-label"><strong>Ethics:</strong> Moral reasoning and value-based judgment</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #ff00ff;"></span>
+                                <span class="legend-label"><strong>Empathy:</strong> Emotional intelligence and human understanding</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #ff4444;"></span>
+                                <span class="legend-label"><strong>Action:</strong> Practical application and decisive execution</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="verdict-content" class="verdict-content"></div>
+                    <div class="verdict-actions" id="verdict-actions" style="display: none;">
+                        <button id="verdict-export" class="btn-primary" data-i18n="export_pdf">Export PDF</button>
+                        <button id="new-inquiry-btn" class="btn-secondary" data-i18n="new_inquiry">New Inquiry</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="footer-text">
+                <span id="era-display" class="era-display">CURRENT ERA: —</span>
+                <span class="footer-separator">|</span>
+                © <span id="current-year"></span> <a href="https://www.linkedin.com/in/jorgis-chatzivantsidis-81a053110/" target="_blank" rel="noopener noreferrer" class="footer-name-link">Georgios Chatzivantsidis</a>
+                <span class="footer-separator">|</span>
+                <button id="api-key-btn-footer" class="footer-link">API Key</button>
+                <span class="footer-separator">|</span>
+                <button id="about-btn-footer" class="footer-link">About</button>
+            </p>
+        </footer>
+    </div>
+
+    <!-- PDF Export Container (Hidden) -->
+    <div id="pdf-container" class="pdf-container"></div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="about-modal">
+        <div class="about-modal-backdrop"></div>
+        <div class="about-modal-content">
+            <button id="about-close" class="about-close-btn" aria-label="Close">×</button>
+            <div class="about-logo">
+                <img src="logo.svg" alt="SYNAPSE Logo" class="about-logo-img">
+            </div>
+            <h2 class="about-title" data-i18n="about_title">ABOUT SYNAPSE</h2>
+            <p class="about-subheadline">The Architecture of Wisdom.</p>
+            <div class="about-body">
+                <h3 data-i18n="mission_title">MISSION</h3>
+                <p data-i18n="mission_text">To accelerate human decision-making by synthesizing classical wisdom with modern strategic thought.</p>
+            </div>
+            
+            <div class="about-divider"></div>
+            
+            <div class="about-process">
+                <h3 class="about-process-title" data-i18n="process_title">THE PROCESS</h3>
+                <p data-i18n="process_text">1. Input Dilemma. 2. Select Council. 3. Synthesize Verdict.</p>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="process-number">1</div>
+                        <h4 class="process-step-title">Pose a Challenge</h4>
+                        <p class="process-step-text">Define your problem or strategic inquiry in the thinking engine.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">2</div>
+                        <h4 class="process-step-title">Assemble your Council</h4>
+                        <p class="process-step-text">Select up to 5 elite thinkers whose frameworks align with your mission.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">3</div>
+                        <h4 class="process-step-title">Receive a Certified Analysis</h4>
+                        <p class="process-step-text">Review the synthesized debate and export your high-stakes report.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="about-final-tagline">Accelerating Decision Making</p>
+            
+            <p class="about-signature" data-i18n="aboutSignature">A project by <a href="https://www.linkedin.com/in/jorgis-chatzivantsidis-81a053110/" target="_blank" rel="noopener noreferrer" class="about-signature-link">Georgios Chatzivantsidis</a></p>
+        </div>
+    </div>
+    
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="settings-modal">
+        <div class="settings-modal-backdrop"></div>
+        <div class="settings-modal-content">
+            <button id="settings-close" class="settings-close-btn" aria-label="Close">×</button>
+            <h2 class="settings-modal-title" data-i18n="settings_title">API SETTINGS</h2>
+            <div class="settings-content">
+                <label for="api-key-input" class="settings-label" data-i18n="apiKeyLabel">OpenAI API Key</label>
+                <div class="settings-input-row">
+                    <input 
+                        type="password" 
+                        id="api-key-input" 
+                        class="settings-input" 
+                        data-i18n-placeholder="apiKeyPlaceholder"
+                        placeholder="sk-..."
+                        autocomplete="off"
+                    >
+                    <div class="settings-actions">
+                        <button id="save-api-key" class="btn-settings" data-i18n="save_key">Save Key</button>
+                        <button id="clear-api-key" class="btn-settings btn-settings-secondary" data-i18n="clear_key">Clear</button>
+                    </div>
+                </div>
+                <div class="settings-status">
+                    <span class="status-label" data-i18n="key_status">Status</span>
+                    <span id="api-key-status" class="status-value">Not Linked</span>
+                </div>
+                <p class="settings-note" data-i18n="settingsNote">Your key is stored locally on your device and never touches our servers.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
