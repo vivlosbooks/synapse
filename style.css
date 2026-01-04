@@ -1703,7 +1703,67 @@ body {
     color: var(--text-primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
     margin-bottom: 0.5rem;
+}
+
+.info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-magic);
+    flex-shrink: 0;
+    border: 1px solid var(--accent-glow);
+}
+
+.info-icon:hover {
+    background: var(--accent-glow);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.privacy-tooltip {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    max-width: 300px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.settings-label:hover .privacy-tooltip,
+.info-icon:hover + .privacy-tooltip,
+.privacy-tooltip:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .settings-input-row {
@@ -1768,6 +1828,13 @@ body {
 
 .btn-settings:active {
     transform: scale(0.95);
+}
+
+.btn-settings.btn-success {
+    background: var(--accent) !important;
+    color: var(--bg-primary) !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 15px var(--accent-glow) !important;
 }
 
 .btn-settings-secondary {

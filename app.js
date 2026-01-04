@@ -40,7 +40,7 @@ const translations = {
         final_verdict: "Final Verdict"
     },
     GR: {
-        placeholder: "ΠΕΡΙΓΡΑΨΤΕ ΤΟ ΔΙΛΗΜΜΑ Η ΤΗ ΣΤΡΑΤΗΓΙΚΗ ΣΑΣ ΠΡΟΚΛΗΣΗ...",
+        placeholder: "Περιγράψτε το δίλημμα ή τη στρατηγική σας πρόκληση...",
         magic_button: "ΑΥΤΟΜΑΤΗ ΕΠΙΛΟΓΗ",
         analyze_button: "ΑΝΑΛΥΣΗ",
         about_title: "ΣΧΕΤΙΚΑ ΜΕ ΤΟ SYNAPSE",
@@ -54,7 +54,8 @@ const translations = {
         key_status: "ΚΑΤΑΣΤΑΣΗ",
         new_inquiry: "ΝΕΑ ΕΡΩΤΗΣΗ",
         export_pdf: "ΕΞΑΓΩΓΗ PDF",
-        final_verdict: "ΤΕΛΙΚΗ ΕΤΥΜΗΓΟΡΙΑ"
+        final_verdict: "ΤΕΛΙΚΗ ΕΤΥΜΗΓΟΡΙΑ",
+        privacyTooltip: "ΤΟ ΚΛΕΙΔΙ ΣΑΣ ΑΠΟΘΗΚΕΥΕΤΑΙ ΤΟΠΙΚΑ ΣΤΟΝ BROWSER. ΔΕΝ ΑΠΟΘΗΚΕΥΕΤΑΙ ΣΕ ΔΙΚΟΥΣ ΜΑΣ SERVERS ΚΑΙ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ ΑΠΟΚΛΕΙΣΤΙΚΑ ΓΙΑ ΤΗΝ ΕΠΙΚΟΙΝΩΝΙΑ ΜΕ ΤΗΝ OPENAI/ANTHROPIC."
     }
 };
 
@@ -91,6 +92,15 @@ function setLanguage(lang) {
         langEn.style.opacity = lang === 'EN' ? '1' : '0.5';
         langGr.style.fontWeight = lang === 'GR' ? '800' : '400';
         langGr.style.opacity = lang === 'GR' ? '1' : '0.5';
+    }
+    
+    // Update privacy tooltip text
+    const privacyTooltip = document.getElementById('privacy-tooltip');
+    if (privacyTooltip) {
+        const tooltipSpan = privacyTooltip.querySelector('span[data-i18n="privacyTooltip"]');
+        if (tooltipSpan && translations[lang] && translations[lang].privacyTooltip) {
+            tooltipSpan.textContent = translations[lang].privacyTooltip;
+        }
     }
 }
 
@@ -2530,10 +2540,16 @@ function initSettingsModal() {
                 updateApiKeyStatus();
                 loadApiKeyToInput();
                 
-                // Visual feedback
-                saveApiKeyBtn.textContent = 'Saved!';
+                // Visual feedback - Success state with green color
+                const originalText = saveApiKeyBtn.textContent;
+                saveApiKeyBtn.textContent = currentLang === 'GR' ? 'ΑΠΟΘΗΚΕΥΘΗΚΕ!' : 'Saved!';
+                saveApiKeyBtn.classList.add('btn-success');
+                
                 setTimeout(() => {
-                    saveApiKeyBtn.textContent = 'Save';
+                    // Restore original text from translations
+                    const t = translations[currentLang];
+                    saveApiKeyBtn.textContent = t ? t.save_key : originalText;
+                    saveApiKeyBtn.classList.remove('btn-success');
                 }, 2000);
             } catch (err) {
                 alert('Failed to save API key. Please try again.');
@@ -2603,6 +2619,14 @@ function init() {
             e.stopPropagation();
             setLanguage('GR');
         });
+    }
+    
+    // ============================================
+    // New Inquiry Button - Direct onclick handler
+    // ============================================
+    const newInquiryBtn = document.getElementById('new-inquiry-btn');
+    if (newInquiryBtn) {
+        newInquiryBtn.onclick = resetApp;
     }
     
     // Logo click handler for reset (acts as Home button)

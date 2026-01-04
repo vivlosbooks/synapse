@@ -220,7 +220,13 @@
             <button id="settings-close" class="settings-close-btn" aria-label="Close">×</button>
             <h2 class="settings-modal-title" data-i18n="settings_title">API SETTINGS</h2>
             <div class="settings-content">
-                <label for="api-key-input" class="settings-label" data-i18n="apiKeyLabel">OpenAI API Key</label>
+                <label for="api-key-input" class="settings-label">
+                    <span data-i18n="apiKeyLabel">OpenAI API Key</span>
+                    <span class="info-icon" id="privacy-info-icon" title="Privacy Information">ⓘ</span>
+                    <div class="privacy-tooltip" id="privacy-tooltip">
+                        <span data-i18n="privacyTooltip">Your key is stored locally in your browser (LocalStorage). It never touches our servers and is used only to communicate directly with OpenAI/Anthropic.</span>
+                    </div>
+                </label>
                 <div class="settings-input-row">
                     <input 
                         type="password" 
